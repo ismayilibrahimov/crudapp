@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link th:href="@{/css/jumbotron.css}" rel="stylesheet">
+    <link th:href="@{/css/signin.css}" rel="stylesheet">
+</head>
+<body class="text-center">
+<div th:replace="fragments/header :: header"></div>
+
+<form class="form-signin" method="post" th:action="@{/update/{id}(id=${product.id})}" th:object="${product}" enctype="multipart/form-data">
+    <h1 class="h3 mb-3 font-weight-normal">Edit Product</h1>
+    <label for="title" class="sr-only">Title</label>
+    <input type="text" id="title" th:field="*{title}" th:value="${product.title}" class="form-control" placeholder="Title" required autofocus>
+    <label for="desc" class="sr-only">Description</label>
+    <textarea id="desc" th:field="*{description}" th:value="${product.description}" class="form-control">Description</textarea>
+    <label for="image">Image</label>
+    <input type="file" id="image" th:field="*{image}" class="form-control" placeholder="Image">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">UPDATE CONTENT</button>
+</form>
+</body>
+</html>

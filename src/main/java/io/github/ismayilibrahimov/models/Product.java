@@ -1,21 +1,25 @@
-package az.touragency.models;
+package io.github.ismayilibrahimov.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.*;
 
 @Entity
-public class Tour {
+@Table(name = "products")
+public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;
+    @Transient
+    private MultipartFile image;
+    @Column(name = "image")
+    private String imageName;
 
-    public Tour(){}
+    public Product(){}
 
-    public Tour(Long id, String title, String description) {
+    public Product(Long id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -46,9 +50,25 @@ public class Tour {
         this.description = description;
     }
 
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
     @Override
     public String toString() {
-        return "Tour{" +
+        return "Product{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
