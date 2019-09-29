@@ -1,8 +1,12 @@
 package io.github.ismayilibrahimov.models;
 
+import io.github.ismayilibrahimov.validation.NotEmptyImage;
+import io.github.ismayilibrahimov.validation.ValidImage;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "products")
@@ -10,9 +14,15 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(groups = {onCreate.class, onUpdate.class})
+    @Size(min = 3, max = 100, groups = {onCreate.class, onUpdate.class})
     private String title;
+    @NotBlank(groups = {onCreate.class, onUpdate.class})
+    @Size(min = 3, max = 500, groups = {onCreate.class, onUpdate.class})
     private String description;
     @Transient
+    @ValidImage(groups = {onCreate.class, onUpdate.class})
+    @NotEmptyImage(groups = onCreate.class)
     private MultipartFile image;
     @Column(name = "image")
     private String imageName;

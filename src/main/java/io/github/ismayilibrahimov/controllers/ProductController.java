@@ -1,11 +1,15 @@
 package io.github.ismayilibrahimov.controllers;
 
 import io.github.ismayilibrahimov.models.Product;
+import io.github.ismayilibrahimov.models.onCreate;
+import io.github.ismayilibrahimov.models.onUpdate;
 import io.github.ismayilibrahimov.repositories.ProductRepository;
 import io.github.ismayilibrahimov.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,8 +57,13 @@ public class ProductController {
 
 
     @PostMapping("/store")
-    public String store(@ModelAttribute Product product, @RequestParam("image") MultipartFile image)
+    public String store(@Validated(onCreate.class) @ModelAttribute Product product,
+                        BindingResult result,
+                        @RequestParam("image") MultipartFile image)
     {
+        if (result.hasErrors()) {
+            return "create";
+        }
         productService.save(product, image);
         return "redirect:/";
     }
@@ -68,7 +77,15 @@ public class ProductController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@ModelAttribute Product product, @RequestParam("image") MultipartFile image) {
+    public String update(@Validated(onUpdate.class) @ModelAttribute Product product,
+                         BindingResult result,
+                         @RequestParam("image") MultipartFile image)
+    {
+
+        if (result.hasErrors()) {
+            return "edit";
+        }
+
         productService.update(product, image);
         return "redirect:/";
     }

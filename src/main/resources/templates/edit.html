@@ -15,10 +15,13 @@
     <h1 class="h3 mb-3 font-weight-normal">Edit Product</h1>
     <label for="title" class="sr-only">Title</label>
     <input type="text" id="title" th:field="*{title}" th:value="${product.title}" class="form-control" placeholder="Title" required autofocus>
+    <span class="text-danger" th:each="error: ${#fields.errors('title')}" th:text="${error}"></span>
     <label for="desc" class="sr-only">Description</label>
     <textarea id="desc" th:field="*{description}" th:value="${product.description}" class="form-control">Description</textarea>
-    <label for="image">Image</label>
-    <input type="file" id="image" th:field="*{image}" class="form-control" placeholder="Image">
+    <span class="text-danger" th:each="error: ${#fields.errors('description')}" th:text="${error}"></span>
+    <label for="image" class="sr-only">Image</label>
+    <input type="file" id="image" th:field="*{image}" class="form-control">
+    <span class="text-danger" th:each="error: ${#fields.errors('image')}" th:text="${error}"></span>
     <button class="btn btn-lg btn-primary btn-block" type="submit">UPDATE CONTENT</button>
 </form>
 </body>
